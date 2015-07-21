@@ -11,7 +11,8 @@ class Game implements GameInterface
     private $board;
     private $template;
     private $storage;
-    private static $storageKey = 'board';
+
+    const STORAGE_KEY = 'board';
 
     public function __construct(Template $template, Storage $storage = null)
     {
@@ -31,7 +32,7 @@ class Game implements GameInterface
             return $this->board;
         }
 
-        $this->board = $this->createStorage()->get(static::$storageKey);
+        $this->board = $this->createStorage()->get(static::STORAGE_KEY);
         if (is_null($this->board)) {
             $boardGenerator = new BoardGenerator();
             $this->board = $boardGenerator->generate();
@@ -52,7 +53,7 @@ class Game implements GameInterface
 
     private function persist($board)
     {
-        $this->createStorage()->set(static::$storageKey, $board);
+        $this->createStorage()->set(static::STORAGE_KEY, $board);
     }
 
     private function draw($board)

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Battleships\Model\Game\Battleships,
+use Battleships\Model\Game\Battleships\Game,
     Battleships\Model\Template\TableTemplate;
 
 
@@ -22,7 +22,7 @@ $app->register(
 $app->get(
     '/',
     function () use ($app) {
-        $game = new Battleships(new TableTemplate($app['twig']));
+        $game = new Game(new TableTemplate($app['twig']));
         return $game
             ->start()
             ->render();

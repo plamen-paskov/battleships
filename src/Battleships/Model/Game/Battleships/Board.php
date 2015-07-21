@@ -1,5 +1,5 @@
 <?php
-namespace Battleships\Model\Board;
+namespace Battleships\Model\Game\Battleships;
 
 class Board
 {

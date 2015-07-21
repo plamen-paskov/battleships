@@ -2,11 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Title of the document</title>
+    <title>Battleships</title>
 </head>
 <body>
 
-Content of the document......
+
+<table cellpadding="5" cellspacing="2" border="1">
+    <tr>
+        <th style="background: yellow">&nbsp;</th>
+
+        {% for col in data %}
+        <th style="background: yellow">
+            {{ loop.index }}
+        </th>
+        {% endfor %}
+    </tr>
+
+    {% for col in data %}
+        <tr>
+            <th style="background: yellow">
+                {{ loop.index }}
+            </th>
+
+            {% for row in col %}
+            <td width="30" style="text-align: center">
+                {{ row }}
+            </td>
+            {% endfor %}
+
+        </tr>
+    {% endfor %}
+
+</table>
+
 
 </body>
 </html>

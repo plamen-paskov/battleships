@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Battleships\Model\Game\Battleships,
+    Battleships\Model\Template\TableTemplate;
+
+
 $app = new Silex\Application();
 
 $app['debug'] = true;
@@ -18,10 +22,10 @@ $app->register(
 $app->get(
     '/',
     function () use ($app) {
-        return $app['twig']->render(
-            'index.twig',
-            array()
-        );
+        $game = new Battleships(new TableTemplate($app['twig']));
+        return $game
+            ->start()
+            ->render();
     }
 );
 

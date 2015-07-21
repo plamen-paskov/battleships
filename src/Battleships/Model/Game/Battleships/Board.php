@@ -6,6 +6,10 @@ class Board
     private $size;
     private $data = array();
 
+    const SIGN_CELL_SHOWN = '-';
+    const SIGN_CELL_NOT_SHOWN = '*';
+    const SIGN_SHIP_CELL_DISCOVERED = '';
+
     public function __construct($size)
     {
         $this->size = $size;
@@ -55,6 +59,20 @@ class Board
     public function getArray()
     {
         return $this->data;
+    }
+
+    public function mask()
+    {
+        $data = $this->data;
+        for ($col = 1, $size = $this->size(); $col <= $size; $col++) {
+            for ($row = 1; $row <= $size; $row++) {
+                if (is_numeric($data[$col][$row]) || empty($data[$col][$row])) {
+                    $data[$col][$row] = static::SIGN_CELL_NOT_SHOWN;
+                }
+            }
+        }
+
+        return $data;
     }
 
     public function __sleep()

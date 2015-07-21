@@ -29,4 +29,14 @@ $app->get(
     }
 );
 
+$app->get(
+    '/move',
+    function () use ($app) {
+        $game = new Game(new TableTemplate($app['twig']));
+        return $game
+            ->start()
+            ->render();
+    }
+);
+
 $app->run();

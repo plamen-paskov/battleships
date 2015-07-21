@@ -22,11 +22,12 @@
         <tr>
             <th style="background: yellow">
                 {{ loop.index }}
+                {% set colNum = loop.index %}
             </th>
 
             {% for row in col %}
             <td width="30" style="text-align: center">
-                {{ row }}
+                <a href="?col={{ colNum }}&row={{ loop.index }}" style="text-decoration: none">{{ row }}</a>
             </td>
             {% endfor %}
 

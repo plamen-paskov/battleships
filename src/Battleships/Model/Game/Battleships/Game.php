@@ -59,7 +59,7 @@ class Game implements GameInterface
     private function draw($board)
     {
         $this->template->setVariable('size', $board->size());
-        $this->template->setVariable('data', $board->getArray());
+        $this->template->setVariable('data', $board->mask());
         return $this->template;
     }
 }

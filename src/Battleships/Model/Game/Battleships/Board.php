@@ -75,6 +75,49 @@ class Board
         return $data;
     }
 
+    public function setShip($col, $row, $id)
+    {
+        if (!$this->isShip($id)) {
+            throw new \Exception("Supplied value is not a ship");
+        }
+
+        $this->set($col, $row, $id);
+    }
+
+    private function isShip($value)
+    {
+        return (int) $value == $value && $value > 0;
+    }
+
+    public function shipExists($id)
+    {
+        for ($col = 1, $size = $this->size(); $col <= $size; $col++) {
+            for ($row = 1; $row <= $size; $row++) {
+                if ($this->data[$col][$row] == $id) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function shipsLeft()
+    {
+        $totalShips = 0;
+        $lastShip = null;
+        for ($col = 1, $size = $this->size(); $col <= $size; $col++) {
+            for ($row = 1; $row <= $size; $row++) {
+                if ($this->isShip($this->data[$col][$row]) && $this->data[$col][$row] != $lastShip) {
+                    $totalShips++;
+                    $lastShip = $this->data[$col][$row];
+                }
+            }
+        }
+
+        return $totalShips;
+    }
+
     public function __sleep()
     {
         return array('data', 'size');

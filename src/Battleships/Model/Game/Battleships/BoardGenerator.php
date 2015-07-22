@@ -87,14 +87,14 @@ class BoardGenerator
     private function addVerticalShip($board, $id, $col, $row, $size)
     {
         for ($offset = 0; $offset < $size; $offset++) {
-            $board->set($col + $offset, $row, $id);
+            $board->setShip($col + $offset, $row, $id);
         }
     }
 
     private function addHorizontalShip($board, $id, $col, $row, $size)
     {
         for ($offset = 0; $offset < $size; $offset++) {
-            $board->set($col, $row + $offset, $id);
+            $board->setShip($col, $row + $offset, $id);
         }
     }
 }

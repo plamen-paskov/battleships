@@ -16,20 +16,11 @@ class TableTemplate implements Template
         $this->data[$key] = $value;
     }
 
-    private function getVariable($key)
-    {
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        }
-    }
-
     public function render()
     {
         return $this->twig->render(
             'index.twig',
-            array(
-                'board' => $this->getVariable('board'),
-            )
+            $this->data
         );
     }
 }

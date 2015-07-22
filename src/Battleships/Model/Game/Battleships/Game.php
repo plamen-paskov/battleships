@@ -66,6 +66,18 @@ class Game implements GameInterface
     public function execute(Action $action)
     {
         $action->setBoard($this->createBoard());
-        $success = $action->perform();
+        $result = $action->perform();
+
+        $message = 'Miss';
+        if ($result->success()) {
+            $data = $result->getValue();
+            $message = $this->board->shipExists($data['shipId']) ? 'Sunk' : 'Hit';
+        }
+
+        if ($this->board->shipsLeft() == 0) {
+            $message = 'Finish';
+        }
+
+        $this->template->setVariable('message', $message);
     }
 }

@@ -22,17 +22,26 @@ class StrikeAction implements Action
 
     public function perform()
     {
-        $value = $this->board->get($this->col, $this->row);
+        $shipId = $this->board->get($this->col, $this->row);
 
-        $success = false;
-        if (is_numeric($value)) {
+        if (is_numeric($shipId)) {
             $success = true;
+            $message = 'Hit';
             $value = 'X';
         } else {
+            $success = false;
             $value = '-';
+            $message = 'Miss';
         }
 
+        $data = array(
+            'shipId' => $shipId,
+            'message' => $message
+        );
+
         $this->board->set($this->col, $this->row, $value);
-        return $success;
+
+        $result = new ActionResult($success, $data);
+        return $result;
     }
 }

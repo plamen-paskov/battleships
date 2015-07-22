@@ -4,7 +4,7 @@ namespace Battleships\Controller;
 use Silex\Application,
     Battleships\Model\Game\Battleships\Game,
     Battleships\Model\Template\TableTemplate,
-    Battleships\Model\Game\Battleships\Action;
+    Battleships\Model\Game\Battleships\StrikeAction;
 
 class BattleshipsController
 {
@@ -30,7 +30,7 @@ class BattleshipsController
 
         $game = new Game(new TableTemplate($this->app['twig']));
         $response = $game->start();
-        $game->execute(new Action\Guess($col, $row));
+        $game->execute(new StrikeAction($col, $row));
         return $response->render();
     }
 }

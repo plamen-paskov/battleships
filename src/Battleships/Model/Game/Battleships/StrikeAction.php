@@ -1,10 +1,9 @@
 <?php
-namespace Battleships\Model\Game\Battleships\Action;
+namespace Battleships\Model\Game\Battleships;
 
-use Battleships\Model\Game\Action,
-    Battleships\Model\Game\Battleships\Board;
+use Battleships\Model\Game\Action;
 
-class Guess implements Action
+class StrikeAction implements Action
 {
     private $col;
     private $row;

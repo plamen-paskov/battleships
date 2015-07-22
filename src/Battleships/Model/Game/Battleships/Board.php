@@ -6,9 +6,7 @@ class Board
     private $size;
     private $data = array();
 
-    const SIGN_CELL_SHOWN = '-';
     const SIGN_CELL_NOT_SHOWN = '*';
-    const SIGN_SHIP_CELL_DISCOVERED = '';
 
     public function __construct($size)
     {

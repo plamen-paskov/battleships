@@ -1,6 +1,7 @@
 <?php
 namespace Battleships\Model\Game\Battleships;
 
+use Battleships\Model\Game\Action;
 use Battleships\Model\Game\Game as GameInterface,
     Battleships\Model\Template\Template,
     Battleships\Model\Storage\Storage,
@@ -58,8 +59,13 @@ class Game implements GameInterface
 
     private function draw($board)
     {
-        $this->template->setVariable('size', $board->size());
-        $this->template->setVariable('data', $board->mask());
+        $this->template->setVariable('board', $board);
         return $this->template;
+    }
+
+    public function execute(Action $action)
+    {
+        $action->setBoard($this->createBoard());
+        $success = $action->perform();
     }
 }

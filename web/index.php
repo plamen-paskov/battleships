@@ -2,7 +2,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Battleships\Model\Game\Battleships\Game,
-    Battleships\Model\Template\TableTemplate;
+    Battleships\Model\Template\TableTemplate,
+    Symfony\Component\HttpFoundation\Request,
+    Battleships\Model\Game\Battleships\Action;
 
 
 $app = new Silex\Application();
@@ -30,12 +32,15 @@ $app->get(
 );
 
 $app->get(
-    '/move',
-    function () use ($app) {
+    '/play',
+    function (Request $request) use ($app) {
+        $col = $request->query->get('col');
+        $row = $request->query->get('row');
+
         $game = new Game(new TableTemplate($app['twig']));
-        return $game
-            ->start()
-            ->render();
+        $response = $game->start();
+        $game->execute(new Action\Guess($col, $row));
+        return $response->render();
     }
 );
 

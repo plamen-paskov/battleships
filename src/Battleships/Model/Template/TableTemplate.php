@@ -28,8 +28,7 @@ class TableTemplate implements Template
         return $this->twig->render(
             'index.twig',
             array(
-                'size' => $this->getVariable('size'),
-                'data' => $this->getVariable('data')
+                'board' => $this->getVariable('board'),
             )
         );
     }

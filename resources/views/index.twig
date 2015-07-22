@@ -7,6 +7,8 @@
 <body>
 
 
+{% set data = board.mask %}
+
 <table cellpadding="5" cellspacing="2" border="1">
     <tr>
         <th style="background: yellow">&nbsp;</th>
@@ -27,7 +29,7 @@
 
             {% for row in col %}
             <td width="30" style="text-align: center">
-                <a href="?col={{ colNum }}&row={{ loop.index }}" style="text-decoration: none">{{ row }}</a>
+                <a href="/battleships/web/index.php/play?col={{ colNum }}&row={{ loop.index }}" style="text-decoration: none">{{ row }}</a>
             </td>
             {% endfor %}
 

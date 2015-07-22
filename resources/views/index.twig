@@ -29,7 +29,7 @@
 
             {% for row in col %}
             <td width="30" style="text-align: center">
-                <a href="/battleships/web/index.php/play?col={{ colNum }}&row={{ loop.index }}" style="text-decoration: none">{{ row }}</a>
+                <a href="{{ path('play', {'col':colNum, 'row':loop.index}) }}" style="text-decoration: none">{{ row }}</a>
             </td>
             {% endfor %}
 

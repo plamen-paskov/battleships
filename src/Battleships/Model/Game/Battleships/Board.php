@@ -16,11 +16,12 @@ class Board
 
     private function initialize($size)
     {
-        for ($row = 1; $row <= $size; $row++) {
-            for ($col = 1; $col <= $size; $col++) {
-                $this->set($col, $row, null);
-            }
-        }
+        $this->traverse(
+            function ($row, $col) {
+                $this->set($row, $col, null);
+            },
+            $size
+        );
     }
 
     public function set($row, $col, $value)
@@ -57,13 +58,13 @@ class Board
     public function getBoardAndHideShips()
     {
         $data = $this->data;
-        for ($row = 1, $size = $this->size(); $row <= $size; $row++) {
-            for ($col = 1; $col <= $size; $col++) {
-                if ($this->isShip($row, $col) || $this->isEmptyCell($this->data[$row][$col])) {
+        $this->traverse(
+            function ($row, $col) use (&$data) {
+                if ($this->isShip($row, $col) || $this->isEmptyCell($this->get($row, $col))) {
                     $this->hideCell($data, $row, $col);
                 }
             }
-        }
+        );
 
         return $data;
     }
@@ -100,31 +101,50 @@ class Board
 
     public function shipExists($id)
     {
-        for ($row = 1, $size = $this->size(); $row <= $size; $row++) {
-            for ($col = 1; $col <= $size; $col++) {
-                if ($this->isShip($row, $col) && $this->data[$row][$col] == $id) {
+        $exists = false;
+        $this->traverse(
+            function ($row, $col) use ($id, &$exists) {
+                if ($this->isShip($row, $col) && $this->get($row, $col) == $id) {
+                    $exists = true;
                     return true;
                 }
             }
-        }
+        );
 
-        return false;
+        return $exists;
     }
 
     public function shipsLeft()
     {
         $totalShips = 0;
         $lastShip = -1;
-        for ($row = 1, $size = $this->size(); $row <= $size; $row++) {
-            for ($col = 1; $col <= $size; $col++) {
-                if ($this->isShip($row, $col) && $this->data[$row][$col] != $lastShip) {
+
+        $this->traverse(
+            function ($row, $col) use (&$totalShips, &$lastShip) {
+                if ($this->isShip($row, $col) && $this->get($row, $col) != $lastShip) {
                     $totalShips++;
-                    $lastShip = $this->data[$row][$col];
+                    $lastShip = $this->get($row, $col);
+                }
+            }
+        );
+
+        return $totalShips;
+    }
+
+    private function traverse($callback, $size = null)
+    {
+        if (is_null($size)) {
+            $size = $this->size();
+        }
+
+        for ($row = 1; $row <= $size; $row++) {
+            for ($col = 1; $col <= $size; $col++) {
+                $terminate = call_user_func($callback, $row, $col);
+                if ($terminate) {
+                    return;
                 }
             }
         }
-
-        return $totalShips;
     }
 
     public function __sleep()

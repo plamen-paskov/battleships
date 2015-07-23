@@ -26,4 +26,11 @@ class SessionStorage implements Storage
             return $_SESSION[$key];
         }
     }
+
+    public function delete($key)
+    {
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
+        }
+    }
 }

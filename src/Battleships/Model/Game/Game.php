@@ -6,4 +6,6 @@ interface Game
     public function start();
 
     public function execute(Action $action);
+
+    public function newGame();
 }

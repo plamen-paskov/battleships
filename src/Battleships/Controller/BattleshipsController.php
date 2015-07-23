@@ -33,4 +33,13 @@ class BattleshipsController
         $game->execute(new StrikeAction($col, $row));
         return $response->render();
     }
+
+    public function newGame()
+    {
+        $game = new Game(new TableTemplate($this->app['twig']));
+        return $game
+            ->newGame()
+            ->start()
+            ->render();
+    }
 }

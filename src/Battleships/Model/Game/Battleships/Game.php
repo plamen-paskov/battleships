@@ -80,4 +80,10 @@ class Game implements GameInterface
 
         $this->template->setVariable('message', $message);
     }
+
+    public function newGame()
+    {
+        $this->createStorage()->delete(static::STORAGE_KEY);
+        return $this;
+    }
 }

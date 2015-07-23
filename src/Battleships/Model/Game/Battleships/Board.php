@@ -132,22 +132,6 @@ class Board
         return $totalShips;
     }
 
-    public function getHumanReadable()
-    {
-        $data = array();
-        for ($row = 1, $size = $this->size(); $row <= $size; $row++) {
-            for ($col = 1; $col <= $size; $col++) {
-                if ($this->isShip($row, $col)) {
-                    if (!isset($data[$this->get($row, $col)])) {
-                        $data[$this->get($row, $col)] = '';
-                    }
-                    $data[$this->get($row, $col)] .= $row . ':' . $col . ";  ";
-                }
-            }
-        }
-        return $data;
-    }
-
     public function __sleep()
     {
         return array('data', 'size');

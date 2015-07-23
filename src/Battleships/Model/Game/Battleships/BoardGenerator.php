@@ -37,44 +37,27 @@ class BoardGenerator
             $row = rand(1, $board->size());
 
             if ($direction == static::DIRECTION_VERTICAL) {
-                if ($this->fitVertical($board, $col, $row, $size)) {
-                    $this->addVerticalShip($board, $id, $col, $row, $size);
+                if ($this->fitVertical($board, $row, $col, $size)) {
+                    $this->addVerticalShip($board, $id, $row, $col, $size);
                     break;
                 }
             } elseif ($direction == static::DIRECTION_HORIZONTAL) {
-                if ($this->fitHorizontal($board, $col, $row, $size)) {
-                    $this->addHorizontalShip($board, $id, $col, $row, $size);
+                if ($this->fitHorizontal($board, $row, $col, $size)) {
+                    $this->addHorizontalShip($board, $id, $row, $col, $size);
                     break;
                 }
             }
         }
     }
 
-    private function fitVertical($board, $col, $row, $size)
-    {
-        for ($offset = 0; $offset < $size; $offset++) {
-            try {
-                $currentCol = $col + $offset;
-                $value = $board->get($currentCol, $row);
-                if (!is_null($value)) {
-                    throw new \Exception("Validation failed at col {$currentCol} row {$row}");
-                }
-            } catch (\Exception $e) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private function fitHorizontal($board, $col, $row, $size)
+    private function fitVertical($board, $row, $col, $size)
     {
         for ($offset = 0; $offset < $size; $offset++) {
             try {
                 $currentRow = $row + $offset;
-                $value = $board->get($col, $currentRow);
+                $value = $board->get($currentRow, $col);
                 if (!is_null($value)) {
-                    throw new \Exception("Validation failed at col {$col} row {$currentRow}");
+                    throw new \Exception("Validation failed at row {$currentRow} col {$col}");
                 }
             } catch (\Exception $e) {
                 return false;
@@ -84,17 +67,34 @@ class BoardGenerator
         return true;
     }
 
-    private function addVerticalShip($board, $id, $col, $row, $size)
+    private function fitHorizontal($board, $row, $col, $size)
     {
         for ($offset = 0; $offset < $size; $offset++) {
-            $board->setShip($col + $offset, $row, $id);
+            try {
+                $currentCol = $col + $offset;
+                $value = $board->get($row, $currentCol);
+                if (!is_null($value)) {
+                    throw new \Exception("Validation failed at row {$row} col {$currentCol}");
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function addVerticalShip($board, $id, $row, $col, $size)
+    {
+        for ($offset = 0; $offset < $size; $offset++) {
+            $board->setShip($row + $offset, $col, $id);
         }
     }
 
-    private function addHorizontalShip($board, $id, $col, $row, $size)
+    private function addHorizontalShip($board, $id, $row, $col, $size)
     {
         for ($offset = 0; $offset < $size; $offset++) {
-            $board->setShip($col, $row + $offset, $id);
+            $board->setShip($row, $col + $offset, $id);
         }
     }
 }

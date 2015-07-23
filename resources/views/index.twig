@@ -17,23 +17,23 @@
     <tr>
         <th style="background: yellow">&nbsp;</th>
 
-        {% for col in data %}
+        {% for row in data %}
         <th style="background: yellow">
             {{ loop.index }}
         </th>
         {% endfor %}
     </tr>
 
-    {% for col in data %}
+    {% for row in data %}
         <tr>
             <th style="background: yellow">
                 {{ loop.index }}
-                {% set colNum = loop.index %}
+                {% set rowNum = loop.index %}
             </th>
 
-            {% for row in col %}
+            {% for col in row %}
             <td width="30" style="text-align: center">
-                <a href="{{ path('play', {'col':colNum, 'row':loop.index}) }}" style="text-decoration: none">{{ row }}</a>
+                <a href="{{ path('play', {'row':rowNum, 'col':loop.index}) }}" style="text-decoration: none">{{ col }}</a>
             </td>
             {% endfor %}
 

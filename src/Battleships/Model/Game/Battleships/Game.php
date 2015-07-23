@@ -9,9 +9,9 @@ use Battleships\Model\Game\Game as GameInterface,
 
 class Game implements GameInterface
 {
-    private $board;
     private $template;
     private $storage;
+    private $board;
 
     const STORAGE_KEY = 'board';
 
@@ -34,13 +34,30 @@ class Game implements GameInterface
         }
 
         $this->board = $this->createStorage()->get(static::STORAGE_KEY);
+//        $debug = $this->board->getHumanReadable();
         if (is_null($this->board)) {
             $boardGenerator = new BoardGenerator();
             $this->board = $boardGenerator->generate();
+//            $this->board = $this->generateFakeBoard();
             $this->persist($this->board);
         }
 
         return $this->board;
+    }
+
+    private function generateFakeBoard()
+    {
+        $b = new Board(10);
+        $b->set(1,1,0);
+        $b->set(1,2,0);
+        $b->set(2,1,1);
+        $b->set(2,2,1);
+        $b->set(2,3,1);
+        $b->set(3,1,2);
+        $b->set(3,2,2);
+        $b->set(3,3,2);
+        $b->set(3,4,2);
+        return $b;
     }
 
     private function createStorage()
@@ -71,7 +88,7 @@ class Game implements GameInterface
         $message = 'Miss';
         if ($result->success()) {
             $data = $result->getValue();
-            $message = $this->board->shipExists($data['shipId']) ? 'Sunk' : 'Hit';
+            $message = !$this->board->shipExists($data['shipId']) ? 'Sunk' : 'Hit';
         }
 
         if ($this->board->shipsLeft() == 0) {

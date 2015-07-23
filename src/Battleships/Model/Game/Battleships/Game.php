@@ -34,30 +34,13 @@ class Game implements GameInterface
         }
 
         $this->board = $this->createStorage()->get(static::STORAGE_KEY);
-//        $debug = $this->board->getHumanReadable();
         if (is_null($this->board)) {
             $boardGenerator = new BoardGenerator();
             $this->board = $boardGenerator->generate();
-//            $this->board = $this->generateFakeBoard();
             $this->persist($this->board);
         }
 
         return $this->board;
-    }
-
-    private function generateFakeBoard()
-    {
-        $b = new Board(10);
-        $b->set(1,1,0);
-        $b->set(1,2,0);
-        $b->set(2,1,1);
-        $b->set(2,2,1);
-        $b->set(2,3,1);
-        $b->set(3,1,2);
-        $b->set(3,2,2);
-        $b->set(3,3,2);
-        $b->set(3,4,2);
-        return $b;
     }
 
     private function createStorage()

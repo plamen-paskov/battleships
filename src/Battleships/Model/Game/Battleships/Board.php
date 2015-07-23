@@ -54,12 +54,7 @@ class Board
         return $this->size;
     }
 
-    public function getArray()
-    {
-        return $this->data;
-    }
-
-    public function mask()
+    public function getBoardAndHideShips()
     {
         $data = $this->data;
         for ($row = 1, $size = $this->size(); $row <= $size; $row++) {

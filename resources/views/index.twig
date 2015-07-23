@@ -9,7 +9,9 @@
 
 {% set data = board.mask %}
 
-{{ message }}
+{% if message is defined %}
+    <div>{{ message }}</div>
+{% endif %}
 
 <table cellpadding="5" cellspacing="2" border="1">
     <tr>

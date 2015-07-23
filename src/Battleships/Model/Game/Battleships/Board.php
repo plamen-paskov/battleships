@@ -7,6 +7,8 @@ class Board
     private $data = [];
 
     const SIGN_CELL_NOT_SHOWN = '*';
+    const SIGN_STRIKE_SUCCESSFUL = 'X';
+    const SIGN_STRIKE_UNSUCCESSFUL = '-';
 
     public function __construct($size)
     {
@@ -145,6 +147,15 @@ class Board
                     return;
                 }
             }
+        }
+    }
+
+    public function mark($row, $col)
+    {
+        if ($this->isShip($row, $col)) {
+            $this->set($row, $col, static::SIGN_STRIKE_SUCCESSFUL);
+        } else {
+            $this->set($row, $col, static::SIGN_STRIKE_UNSUCCESSFUL);
         }
     }
 

@@ -28,16 +28,14 @@ class StrikeAction implements Action
                 'message' => 'Hit'
             ];
             $success = true;
-            $value = 'X';
         } else {
             $data = [
                 'message' => 'Miss'
             ];
             $success = false;
-            $value = '-';
         }
 
-        $this->board->set($this->row, $this->col, $value);
+        $this->board->mark($this->row, $this->col);
 
         $result = new ActionResult($success, $data);
         return $result;

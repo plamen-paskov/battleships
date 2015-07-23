@@ -84,7 +84,7 @@ class Board
 
     private function isShip($value)
     {
-        return (int) $value == $value && $value >= 0;
+        return (string)intval($value) == $value && $value >= 0;
     }
 
     public function shipExists($id)

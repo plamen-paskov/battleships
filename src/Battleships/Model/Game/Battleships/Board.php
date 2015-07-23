@@ -60,7 +60,7 @@ class Board
         $data = $this->data;
         $this->traverse(
             function ($row, $col) use (&$data) {
-                if ($this->isShip($row, $col) || $this->isEmptyCell($this->get($row, $col))) {
+                if ($this->isShip($row, $col) || $this->isEmptyCell($row, $col)) {
                     $this->hideCell($data, $row, $col);
                 }
             }
@@ -89,8 +89,9 @@ class Board
         return (string)intval($value) == $value && $value >= 0;
     }
 
-    private function isEmptyCell($value)
+    private function isEmptyCell($row, $col)
     {
+        $value = $this->get($row, $col);
         return is_null($value);
     }
 

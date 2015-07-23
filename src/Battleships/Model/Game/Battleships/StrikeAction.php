@@ -23,16 +23,16 @@ class StrikeAction implements Action
     public function perform()
     {
         if ($this->board->isShip($this->row, $this->col)) {
-            $data = array(
+            $data = [
                 'shipId' => $this->board->get($this->row, $this->col),
                 'message' => 'Hit'
-            );
+            ];
             $success = true;
             $value = 'X';
         } else {
-            $data = array(
+            $data = [
                 'message' => 'Miss'
-            );
+            ];
             $success = false;
             $value = '-';
         }

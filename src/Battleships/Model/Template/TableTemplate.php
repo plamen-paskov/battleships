@@ -4,7 +4,7 @@ namespace Battleships\Model\Template;
 class TableTemplate implements Template
 {
     private $twig;
-    private $data = array();
+    private $data = [];
 
     public function __construct(\Twig_Environment $twig)
     {

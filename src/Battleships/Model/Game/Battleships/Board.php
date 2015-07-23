@@ -4,7 +4,7 @@ namespace Battleships\Model\Game\Battleships;
 class Board
 {
     private $size;
-    private $data = array();
+    private $data = [];
 
     const SIGN_CELL_NOT_SHOWN = '*';
 
@@ -150,6 +150,6 @@ class Board
 
     public function __sleep()
     {
-        return array('data', 'size');
+        return ['data', 'size'];
     }
 }

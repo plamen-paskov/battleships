@@ -4,13 +4,13 @@ namespace Battleships\Model\Game\Battleships;
 class BoardGenerator
 {
     private static $boardSize = 10;
-    private static $ships = array(
+    private static $ships = [
         0 => 2,
         1 => 3,
         2 => 3,
         3 => 4,
         4 => 5
-    );
+    ];
 
     const DIRECTION_VERTICAL = 1;
     const DIRECTION_HORIZONTAL = 2;

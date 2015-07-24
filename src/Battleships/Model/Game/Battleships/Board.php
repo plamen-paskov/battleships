@@ -1,10 +1,12 @@
 <?php
 namespace Battleships\Model\Game\Battleships;
 
+use Battleships\Model\Matrix;
+
 class Board
 {
     private $size;
-    private $data = [];
+    private $data;
 
     const SIGN_CELL_NOT_SHOWN = '*';
     const SIGN_STRIKE_SUCCESSFUL = 'X';
@@ -18,57 +20,26 @@ class Board
 
     private function initialize($size)
     {
-        $this->traverse(
-            function ($row, $col) {
-                $this->set($row, $col, null);
-            },
-            $size
-        );
-    }
-
-    private function set($row, $col, $value)
-    {
-        if ($row < 1 || $row > $this->size()) {
-            throw new \Exception("Index out of range for row {$row}");
-        }
-
-        if ($col < 1 || $col > $this->size()) {
-            throw new \Exception("Index out of range for col {$col}");
-        }
-
-        $this->data[$row][$col] = $value;
+        $this->data = new Matrix($size, $size);
     }
 
     public function get($row, $col)
     {
-        if (!array_key_exists($row, $this->data)) {
-            throw new \Exception("Row {$row} not found");
-        }
-
-        if (!array_key_exists($col, $this->data[$row])) {
-            throw new \Exception("Col {$col} not found at row {$row}");
-        }
-
-        return $this->data[$row][$col];
-    }
-
-    private function size()
-    {
-        return $this->size;
+        return $this->data->get($row, $col);
     }
 
     public function getBoardAndHideShips()
     {
-        $data = $this->data;
-        $this->traverse(
-            function ($row, $col) use (&$data) {
+        $data = clone $this->data;
+        $this->data->walk(
+            function ($row, $col) use ($data) {
                 if ($this->isShip($row, $col) || $this->isEmptyCell($row, $col)) {
                     $this->hideCell($data, $row, $col);
                 }
             }
         );
 
-        return $data;
+        return $data->toArray();
     }
 
     public function setShip($row, $col, $id)
@@ -77,7 +48,7 @@ class Board
             throw new \Exception("Supplied value is not a ship");
         }
 
-        $this->set($row, $col, $id);
+        $this->data->set($row, $col, $id);
     }
 
     public function isShip($row, $col)
@@ -97,15 +68,15 @@ class Board
         return is_null($value);
     }
 
-    private function hideCell(&$data, $row, $col)
+    private function hideCell($data, $row, $col)
     {
-        $data[$row][$col] = static::SIGN_CELL_NOT_SHOWN;
+        $data->set($row, $col, static::SIGN_CELL_NOT_SHOWN);
     }
 
     public function shipExists($id)
     {
         $exists = false;
-        $this->traverse(
+        $this->data->walk(
             function ($row, $col) use ($id, &$exists) {
                 if ($this->isShip($row, $col) && $this->get($row, $col) == $id) {
                     $exists = true;
@@ -122,7 +93,7 @@ class Board
         $totalShips = 0;
         $lastShip = -1;
 
-        $this->traverse(
+        $this->data->walk(
             function ($row, $col) use (&$totalShips, &$lastShip) {
                 if ($this->isShip($row, $col) && $this->get($row, $col) != $lastShip) {
                     $totalShips++;
@@ -134,28 +105,12 @@ class Board
         return $totalShips;
     }
 
-    private function traverse($callback, $size = null)
-    {
-        if (is_null($size)) {
-            $size = $this->size();
-        }
-
-        for ($row = 1; $row <= $size; $row++) {
-            for ($col = 1; $col <= $size; $col++) {
-                $terminate = call_user_func($callback, $row, $col);
-                if ($terminate) {
-                    return;
-                }
-            }
-        }
-    }
-
     public function mark($row, $col)
     {
         if ($this->isShip($row, $col)) {
-            $this->set($row, $col, static::SIGN_STRIKE_SUCCESSFUL);
+            $this->data->set($row, $col, static::SIGN_STRIKE_SUCCESSFUL);
         } else {
-            $this->set($row, $col, static::SIGN_STRIKE_UNSUCCESSFUL);
+            $this->data->set($row, $col, static::SIGN_STRIKE_UNSUCCESSFUL);
         }
     }
 

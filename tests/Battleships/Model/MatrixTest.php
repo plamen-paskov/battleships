@@ -1,15 +1,10 @@
 <?php
-require __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../BaseTestCase.php';
 
 use Battleships\Model\Matrix;
 
-class MatrixTest extends \Silex\WebTestCase
+class MatrixTest extends BaseTestCase
 {
-    public function createApplication()
-    {
-        return require __DIR__ . '/../../../app/app.php';
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */

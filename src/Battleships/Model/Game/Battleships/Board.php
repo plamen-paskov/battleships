@@ -112,6 +112,11 @@ class Board
         return $this->data->getRows();
     }
 
+    public function walk($callback)
+    {
+        return $this->data->walk($callback);
+    }
+
     public function __sleep()
     {
         return ['data'];

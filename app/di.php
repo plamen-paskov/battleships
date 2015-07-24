@@ -1,10 +1,10 @@
 <?php
 use Battleships\Model\Game\Battleships\Game as GameBattleships,
-    Battleships\Model\Template\TableTemplate as Template;
+    Battleships\Model\Game\Battleships\BoardTemplate;
 
 $app['game.battleships'] = $app->share(
     function ($app) {
-        $game = new GameBattleships(new Template($app['twig']));
+        $game = new GameBattleships(new BoardTemplate($app['twig']));
         return $game;
     }
 );

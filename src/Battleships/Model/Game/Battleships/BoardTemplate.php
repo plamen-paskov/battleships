@@ -1,7 +1,9 @@
 <?php
-namespace Battleships\Model\Template;
+namespace Battleships\Model\Game\Battleships;
 
-class TableTemplate implements Template
+use Battleships\Model\Template\Template;
+
+class BoardTemplate implements Template
 {
     private $twig;
     private $data = [];
@@ -19,7 +21,7 @@ class TableTemplate implements Template
     public function render()
     {
         return $this->twig->render(
-            'index.html.twig',
+            'battleships/board.html.twig',
             $this->data
         );
     }

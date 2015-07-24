@@ -19,7 +19,7 @@ class TableTemplate implements Template
     public function render()
     {
         return $this->twig->render(
-            'index.twig',
+            'index.html.twig',
             $this->data
         );
     }

@@ -33,8 +33,8 @@ class BoardGenerator
     {
         while (true) {
             $direction = rand(static::DIRECTION_VERTICAL, static::DIRECTION_HORIZONTAL);
-            $col = rand(1, $board->size());
-            $row = rand(1, $board->size());
+            $col = rand(1, static::$boardSize);
+            $row = rand(1, static::$boardSize);
 
             if ($direction == static::DIRECTION_VERTICAL) {
                 if ($this->fitVertical($board, $row, $col, $size)) {

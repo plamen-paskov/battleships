@@ -26,7 +26,7 @@ class Board
         );
     }
 
-    public function set($row, $col, $value)
+    private function set($row, $col, $value)
     {
         if ($row < 1 || $row > $this->size()) {
             throw new \Exception("Index out of range for row {$row}");
@@ -52,7 +52,7 @@ class Board
         return $this->data[$row][$col];
     }
 
-    public function size()
+    private function size()
     {
         return $this->size;
     }

@@ -81,6 +81,16 @@ class Matrix
         return $this->data;
     }
 
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    public function getCols()
+    {
+        return $this->cols;
+    }
+
     public function __sleep()
     {
         return ['data', 'rows', 'cols'];

@@ -107,6 +107,11 @@ class Board
         }
     }
 
+    public function size()
+    {
+        return $this->data->getRows();
+    }
+
     public function __sleep()
     {
         return ['data'];

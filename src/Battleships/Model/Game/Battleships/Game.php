@@ -5,18 +5,21 @@ use Battleships\Model\Game\Action;
 use Battleships\Model\Game\Game as GameInterface,
     Battleships\Model\Template\Template,
     Battleships\Model\Storage\Storage,
-    Battleships\Model\Storage\SessionStorage;
+    Battleships\Model\Storage\SessionStorage,
+    Battleships\Model\Game\Battleships\BoardGenerator;
 
 class Game implements GameInterface
 {
+    private $boardGenerator;
     private $template;
     private $storage;
     private $board;
 
     const STORAGE_KEY = 'board';
 
-    public function __construct(Template $template, Storage $storage = null)
+    public function __construct(BoardGenerator $boardGenerator, Template $template, Storage $storage = null)
     {
+        $this->boardGenerator = $boardGenerator;
         $this->template = $template;
         $this->storage = $storage;
     }
@@ -35,8 +38,7 @@ class Game implements GameInterface
 
         $this->board = $this->createStorage()->get(static::STORAGE_KEY);
         if (is_null($this->board)) {
-            $boardGenerator = new BoardGenerator();
-            $this->board = $boardGenerator->generate();
+            $this->board = $this->boardGenerator->generate();
             $this->persist($this->board);
         }
 

@@ -20,5 +20,10 @@
     },
     "config": {
         "use-include-path": true
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "symfony/browser-kit": ">=2.3,<2.4-dev",
+        "symfony/css-selector": "*"
     }
 }

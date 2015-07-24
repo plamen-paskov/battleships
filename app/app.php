@@ -15,6 +15,8 @@ $app->register(
     )
 );
 
+require_once __DIR__ . '/../app/di.php';
+
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 $app->register(new Battleships\Provider\ControllerProvider());

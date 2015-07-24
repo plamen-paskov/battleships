@@ -1,43 +1,41 @@
 <?php
 namespace Battleships\Controller;
 
-use Silex\Application,
-    Battleships\Model\Game\Battleships\Game,
-    Battleships\Model\Template\TableTemplate,
+use Battleships\Model\Game\Battleships\Game,
+    Symfony\Component\HttpFoundation\Request,
     Battleships\Model\Game\Battleships\StrikeAction;
 
 class BattleshipsController
 {
-    private $app;
+    private $game;
+    private $request;
 
-    public function __construct(Application $app)
+    public function __construct(Game $game, Request $request)
     {
-        $this->app = $app;
+        $this->game = $game;
+        $this->request = $request;
     }
 
     public function index()
     {
-        $game = new Game(new TableTemplate($this->app['twig']));
-        return $game
+        return $this->game
             ->start()
             ->render();
     }
 
     public function play()
     {
-        $col = $this->app['request']->query->get('col');
-        $row = $this->app['request']->query->get('row');
+        $col = $this->request->query->get('col');
+        $row = $this->request->query->get('row');
 
-        $game = new Game(new TableTemplate($this->app['twig']));
-        $response = $game->start();
-        $game->execute(new StrikeAction($col, $row));
+        $response = $this->game->start();
+        $this->game->execute(new StrikeAction($col, $row));
         return $response->render();
     }
 
     public function newGame()
     {
-        $game = new Game(new TableTemplate($this->app['twig']));
-        return $game
+        return $this->game
             ->newGame()
             ->start()
             ->render();

@@ -1,6 +1,7 @@
 <?php
 namespace Battleships\Model\Game;
 
-interface Action {
+interface Action
+{
     public function perform();
 }

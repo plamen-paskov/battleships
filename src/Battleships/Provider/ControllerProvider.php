@@ -11,7 +11,7 @@ class ControllerProvider implements ServiceProviderInterface
     {
         $app['battleships.controller'] = $app->share(
             function () use ($app) {
-                return new BattleshipsController($app);
+                return new BattleshipsController($app['game.battleships'], $app['request']);
             }
         );
     }

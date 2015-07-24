@@ -1,6 +1,8 @@
 <?php
 namespace Battleships\Model\Game\Battleships;
 
+use Battleships\Model\Matrix;
+
 class BoardGenerator
 {
     private static $boardSize = 10;
@@ -17,7 +19,7 @@ class BoardGenerator
 
     public function generate()
     {
-        $board = new Board(static::$boardSize);
+        $board = new Board(new Matrix(static::$boardSize, static::$boardSize));
         $this->addShips($board);
         return $board;
     }

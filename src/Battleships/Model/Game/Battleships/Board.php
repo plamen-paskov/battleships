@@ -5,22 +5,15 @@ use Battleships\Model\Matrix;
 
 class Board
 {
-    private $size;
     private $data;
 
     const SIGN_CELL_NOT_SHOWN = '*';
     const SIGN_STRIKE_SUCCESSFUL = 'X';
     const SIGN_STRIKE_UNSUCCESSFUL = '-';
 
-    public function __construct($size)
+    public function __construct(Matrix $data)
     {
-        $this->size = $size;
-        $this->initialize($size);
-    }
-
-    private function initialize($size)
-    {
-        $this->data = new Matrix($size, $size);
+        $this->data = $data;
     }
 
     public function get($row, $col)
@@ -116,6 +109,6 @@ class Board
 
     public function __sleep()
     {
-        return ['data', 'size'];
+        return ['data'];
     }
 }

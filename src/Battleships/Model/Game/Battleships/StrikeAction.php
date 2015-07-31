@@ -3,6 +3,11 @@ namespace Battleships\Model\Game\Battleships;
 
 use Battleships\Model\Game\Action;
 
+/**
+ * Encapsulate the logic of trying to guess what's below the given cell
+ * Class StrikeAction
+ * @package Battleships\Model\Game\Battleships
+ */
 class StrikeAction implements Action
 {
     private $col;
@@ -20,6 +25,10 @@ class StrikeAction implements Action
         $this->board = $board;
     }
 
+    /**
+     * Replace the value of the specified cell and return the id of the ship if it was a ship in this cell
+     * @return ActionResult|mixed
+     */
     public function perform()
     {
         $success = false;

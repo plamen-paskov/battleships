@@ -8,6 +8,13 @@ use Battleships\Model\Game\Game as GameInterface,
     Battleships\Model\Storage\SessionStorage,
     Battleships\Model\Game\Battleships\BoardGenerator;
 
+/**
+ * An entry point for the game. The class is responsible for starting the game,
+ * cleaning session and other resources in order to start new game and executing game specific
+ * game actions. The class acts like a facade hiding complex logic that is behind the game.
+ * Class Game
+ * @package Battleships\Model\Game\Battleships
+ */
 class Game implements GameInterface
 {
     private $boardGenerator;
@@ -24,6 +31,10 @@ class Game implements GameInterface
         $this->storage = $storage;
     }
 
+    /**
+     * Start a game if it's not already started or resume the last started one
+     * @return Template
+     */
     public function start()
     {
         $board = $this->createBoard();
@@ -65,6 +76,12 @@ class Game implements GameInterface
         return $this->template;
     }
 
+    /**
+     * Execute game specific action. In the case with this game the action is just of one type - trying to
+     * guess what's hidden below certain cell
+     * @param Action $action
+     * @return void
+     */
     public function execute(Action $action)
     {
         $action->setBoard($this->createBoard());
@@ -83,6 +100,11 @@ class Game implements GameInterface
         $this->template->setVariable('message', $message);
     }
 
+    /**
+     * Clear the data associated with last started game so the next call to start a game will create
+     * a new game session.
+     * @return $this
+     */
     public function newGame()
     {
         $this->createStorage()->delete(static::STORAGE_KEY);

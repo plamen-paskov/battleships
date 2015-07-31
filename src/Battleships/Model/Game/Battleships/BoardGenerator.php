@@ -1,6 +1,11 @@
 <?php
 namespace Battleships\Model\Game\Battleships;
 
+/**
+ * Encapsulate the algorithm of adding random ships to the board
+ * Class BoardGenerator
+ * @package Battleships\Model\Game\Battleships
+ */
 class BoardGenerator
 {
     private $board;
@@ -15,6 +20,10 @@ class BoardGenerator
         $this->ships = $ships;
     }
 
+    /**
+     * Put random ships on the board and return the board instance
+     * @return Board
+     */
     public function generate()
     {
         $this->addShips($this->board);
